@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+    <title>{{ title }}</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+{% if ol_ul == "ul" %}
+<div>
+    <h2>Список профессий</h2>
+    <ul>
+        {% for user in list %}
+        <li>{{ user }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<div>
+    <h2>Список профессий</h2>
+    <ol>
+        {% for user in list %}
+        <li>{{ user }}</li>
+        {% endfor %}
+    </ol>
+</div>
+{% endif %}
+{% endblock %}
+</body>
+</html>
