@@ -3,7 +3,7 @@ import json
 from flask import Flask, url_for, render_template, request
 
 app = Flask(__name__)
-list_data_human = {'title': None,
+list_data_human = {'title': 'Анкета',
                    'surname': None,
                    'name': None,
                    'education': None,
@@ -11,6 +11,17 @@ list_data_human = {'title': None,
                    'sex': None,
                    'motivation': None,
                    'ready': None}
+
+prof_list = {'profession9': 'гляциолог',
+             'profession8': 'астрогеолог',
+             'profession7': 'специалист по радиационной защите',
+             'profession6': 'климатолог',
+             'profession5': 'инженер по терраформированию',
+             'profession4': 'врач',
+             'profession3': 'экзобиолог',
+             'profession2': 'строитель',
+             'profession1': 'пилот',
+             'profession0': 'инженер-исследователь'}
 
 
 @app.route('/<title>')
@@ -56,23 +67,39 @@ def auto_answer():
     if request.method == 'GET':
         return render_template('auto_answer.html')
     elif request.method == 'POST':
-        data = 'file about sex profession9 profession8 profession7 profession6 profession5 profession4 profession3 ' \
-               'profession2 profession1 profession0 education email name surname'
-        data = data.split()
-        data = data[::-1]
-
-        for elem in data:
+        prof = 'profession9 profession8 profession7 profession6 profession5 profession4 profession3 ' \
+               'profession2 profession1 profession0'.split()
+        for elem in prof:
             try:
-                list_data_human.append(request.form[elem])
+                request.form[elem]
+                prof = elem
+                break
             except Exception:
                 pass
+        data = f'surname name education {prof} sex about accept'
+        data = data.split()
+        keys = list(list_data_human.keys())[1:]
+        for i in range(len(data)):
+            try:
+                list_data_human[keys[i]] = request.form[data[i]]
+                print(request.form[data[i]])
+            except Exception:
+                list_data_human[keys[i]] = None
+        print(request.form)
+        print(list_data_human)
+
+        if list_data_human['ready'] == 'on':
+            list_data_human['ready'] = True
+        else:
+            list_data_human['ready'] = False
+        list_data_human['profession'] = prof_list[prof]
         return "Форма отправлена"
 
 
 # answer
 @app.route('/answer')
 def answer():
-    return render_template('answer.html')
+    return render_template('answer.html', **list_data_human)
 
 
 if __name__ == '__main__':
