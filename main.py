@@ -1,8 +1,14 @@
 import json
 
-from flask import Flask, url_for, render_template, request
+from flask import Flask, url_for, render_template, request, redirect
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
 list_data_human = {'title': 'Анкета',
                    'surname': None,
                    'name': None,
@@ -11,7 +17,6 @@ list_data_human = {'title': 'Анкета',
                    'sex': None,
                    'motivation': None,
                    'ready': None}
-
 prof_list = {'profession9': 'гляциолог',
              'profession8': 'астрогеолог',
              'profession7': 'специалист по радиационной защите',
@@ -22,6 +27,22 @@ prof_list = {'profession9': 'гляциолог',
              'profession2': 'строитель',
              'profession1': 'пилот',
              'profession0': 'инженер-исследователь'}
+
+
+class LoginForm(FlaskForm):
+    username_1 = StringField('Id астронавта', validators=[DataRequired()])
+    password_1 = PasswordField('Пароль астронавта', validators=[DataRequired()])
+    username_2 = StringField('Id капитана', validators=[DataRequired()])
+    password_2 = PasswordField('Пароль капитана', validators=[DataRequired()])
+    submit = SubmitField('Доступ')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect('/answer')
+    return render_template('login.html', title='Авторизация', form=form)
 
 
 @app.route('/<title>')

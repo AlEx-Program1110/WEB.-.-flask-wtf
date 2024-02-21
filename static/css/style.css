@@ -1,3 +1,6 @@
+.I-dont-know-why-change-style {
+    margin: 10px;
+}
 .list {
       text-indent: 50px;
 }
@@ -11,5 +14,11 @@ form.login_form {
     padding: 10px;
 }
 .form_list {
+    margin-left: 20px;
+}
+.emergency-access {
+    display: inline;
+}
+.form-id {
     margin-left: 20px;
 }

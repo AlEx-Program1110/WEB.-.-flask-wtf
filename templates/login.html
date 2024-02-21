@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+</head>
+<body class="I-dont-know-why-change-style">
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-id">
+    <img src="../static/img/MARS.png">
+    <h2 class="emergency-access">Аварийный доступ</h2>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username_1.label }}<br>
+            {{ form.username_1(class="form-control") }}<br>
+            {% for error in form.username_1.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.password_1.label }}<br>
+            {{ form.password_1(class="form-control", type="password") }}<br>
+            {% for error in form.password_1.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+
+        <p>
+            {{ form.username_2.label }}<br>
+            {{ form.username_2(class="form-control") }}<br>
+            {% for error in form.username_2.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.password_2.label }}<br>
+            {{ form.password_2(class="form-control", type="password") }}<br>
+            {% for error in form.password_2.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>
